@@ -26,7 +26,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-playwright-
       - name: Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
         env:
           PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
