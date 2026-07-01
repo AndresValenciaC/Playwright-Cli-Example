@@ -16,12 +16,11 @@ export default defineConfig({
 
   workers: process.env.CI ? 1 : undefined,
 
-
-
   /* Reports */
   reporter: [
     ["list"],
     ["html"],
+    ["github"],
     ["json", { outputFile: "./test-results/test-results.json" }],
   ],
 
