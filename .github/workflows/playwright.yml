@@ -37,7 +37,6 @@ jobs:
 
       # Only downloads browsers if there is a cache miss
       - name: Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
 
       # Installs OS system dependencies if cache hit happens (ensures system libraries exist)
