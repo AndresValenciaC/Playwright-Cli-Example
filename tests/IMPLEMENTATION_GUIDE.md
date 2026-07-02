@@ -271,6 +271,10 @@ npx playwright test setup; npx playwright test auth-example.test.ts --headed
 
 npx playwright test setup; npx playwright test tests/api/data-driven/api-data-driven.test.ts --headed
 
+# Run tests with package.json script
+
+npm run test:ui
+
 # 2. Setup + todos los tests
 
 npx playwright test setup; npx playwright test --headed
