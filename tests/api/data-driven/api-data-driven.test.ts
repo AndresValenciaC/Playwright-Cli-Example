@@ -58,9 +58,9 @@ test.describe("API Data-Driven Tests", () => {
   let apiContext: APIRequestContext;
 
   /**
-  * Setup: Create API context with authentication
-  * Uses storage state from successful login
-  */
+   * Setup: Create API context with authentication
+   * Uses storage state from successful login
+   */
   test.beforeAll(async ({ playwright }, testInfo) => {
     try {
       // Create API context with authenticated cookies/tokens

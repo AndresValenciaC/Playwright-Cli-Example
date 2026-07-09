@@ -68,34 +68,30 @@ test.describe("State Management Tests", () => {
   test.describe("Cart State", () => {
     test("should persist cart items in session", async ({ page }) => {
       // Add first product to cart
-      const addButton = page
-        .locator('button:has-text("Add to Cart")')
-        .first();
+      const addButton = page.locator('button:has-text("Add to Cart")').first();
 
       if (await addButton.isVisible()) {
         await addButton.click();
 
         // Verify cart badge shows 1
-        await expect(page.getByRole("button", { name: /Cart 1/ })).toContainText(
-          "1",
-        );
+        await expect(
+          page.getByRole("button", { name: /Cart 1/ }),
+        ).toContainText("1");
 
         // Reload page
         await page.reload();
 
         // Cart should still show 1 item
-        await expect(page.getByRole("button", { name: /Cart 1/ })).toContainText(
-          "1",
-        );
+        await expect(
+          page.getByRole("button", { name: /Cart 1/ }),
+        ).toContainText("1");
 
         console.log("✓ Cart items persisted in session");
       }
     });
 
     test("should update cart count when item added", async ({ page }) => {
-      const addButton = page
-        .locator('button:has-text("Add to Cart")')
-        .first();
+      const addButton = page.locator('button:has-text("Add to Cart")').first();
 
       if (await addButton.isVisible()) {
         // Initial cart count
@@ -113,14 +109,14 @@ test.describe("State Management Tests", () => {
     });
 
     test("should maintain cart across different pages", async ({ page }) => {
-      const addButton = page
-        .locator('button:has-text("Add to Cart")')
-        .first();
+      const addButton = page.locator('button:has-text("Add to Cart")').first();
 
       if (await addButton.isVisible()) {
         // Add item to cart
         await addButton.click();
-        await expect(page.getByRole("button", { name: /Cart 1/ })).toBeVisible();
+        await expect(
+          page.getByRole("button", { name: /Cart 1/ }),
+        ).toBeVisible();
 
         // Navigate to checkout
         await page.getByRole("button", { name: /Cart 1/ }).click();
@@ -135,7 +131,9 @@ test.describe("State Management Tests", () => {
         }
 
         // Cart should still have items
-        await expect(page.getByRole("button", { name: /Cart 1/ })).toBeVisible();
+        await expect(
+          page.getByRole("button", { name: /Cart 1/ }),
+        ).toBeVisible();
 
         console.log("✓ Cart maintained across pages");
       }
@@ -143,9 +141,7 @@ test.describe("State Management Tests", () => {
 
     test("should remove items from cart correctly", async ({ page }) => {
       // Add item
-      const addButton = page
-        .locator('button:has-text("Add to Cart")')
-        .first();
+      const addButton = page.locator('button:has-text("Add to Cart")').first();
 
       if (await addButton.isVisible()) {
         await addButton.click();
@@ -223,9 +219,7 @@ test.describe("State Management Tests", () => {
       page,
     }) => {
       // Navigate to checkout to test form validation
-      const addButton = page
-        .locator('button:has-text("Add to Cart")')
-        .first();
+      const addButton = page.locator('button:has-text("Add to Cart")').first();
 
       if (await addButton.isVisible()) {
         await addButton.click();
@@ -255,9 +249,7 @@ test.describe("State Management Tests", () => {
     test("should clear validation error when valid input provided", async ({
       page,
     }) => {
-      const addButton = page
-        .locator('button:has-text("Add to Cart")')
-        .first();
+      const addButton = page.locator('button:has-text("Add to Cart")').first();
 
       if (await addButton.isVisible()) {
         await addButton.click();
@@ -321,9 +313,7 @@ test.describe("State Management Tests", () => {
       });
 
       // Add item (triggers network activity)
-      const addButton = page
-        .locator('button:has-text("Add to Cart")')
-        .first();
+      const addButton = page.locator('button:has-text("Add to Cart")').first();
 
       if (await addButton.isVisible()) {
         await addButton.click();
@@ -338,9 +328,7 @@ test.describe("State Management Tests", () => {
       page,
     }) => {
       // Go to checkout to test submit button
-      const addButton = page
-        .locator('button:has-text("Add to Cart")')
-        .first();
+      const addButton = page.locator('button:has-text("Add to Cart")').first();
 
       if (await addButton.isVisible()) {
         await addButton.click();
@@ -426,15 +414,15 @@ test.describe("State Management Tests", () => {
 
     test("should update UI when data changes", async ({ page }) => {
       // Add item to cart
-      const addButton = page
-        .locator('button:has-text("Add to Cart")')
-        .first();
+      const addButton = page.locator('button:has-text("Add to Cart")').first();
 
       if (await addButton.isVisible()) {
         await addButton.click();
 
         // UI should update with cart count
-        await expect(page.getByRole("button", { name: /Cart 1/ })).toBeVisible();
+        await expect(
+          page.getByRole("button", { name: /Cart 1/ }),
+        ).toBeVisible();
 
         console.log("✓ UI updated when data changed");
       }
@@ -460,19 +448,21 @@ test.describe("State Management Tests", () => {
     test("should maintain separate cart state per product", async ({
       page,
     }) => {
-      const addButtons = page.locator(
-        'button:has-text("Add to Cart")',
-      );
+      const addButtons = page.locator('button:has-text("Add to Cart")');
       const buttonCount = await addButtons.count();
 
       if (buttonCount > 1) {
         // Add first product
         await addButtons.nth(0).click();
-        await expect(page.getByRole("button", { name: /Cart 1/ })).toBeVisible();
+        await expect(
+          page.getByRole("button", { name: /Cart 1/ }),
+        ).toBeVisible();
 
         // Add second product
         await addButtons.nth(1).click();
-        await expect(page.getByRole("button", { name: /Cart 2/ })).toBeVisible();
+        await expect(
+          page.getByRole("button", { name: /Cart 2/ }),
+        ).toBeVisible();
 
         console.log("✓ Separate cart state per product maintained");
       }

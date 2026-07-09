@@ -9,7 +9,7 @@ import { test as setup } from "@playwright/test";
 import {
   authenticateUserByType,
   getAuthFileForUserType,
-  saveAuthState
+  saveAuthState,
 } from "../fixtures/auth-config";
 
 /**
@@ -50,7 +50,6 @@ setup("auth-problem-user", async ({ page }, testInfo) => {
     await saveAuthState(page, getAuthFileForUserType("problemUser"));
 
     console.log("✓ Problem user authentication setup completed\n");
-
   } catch (error) {
     console.error(`✗ Problem user authentication failed: ${error}`);
     testInfo.skip(true, "Authentication failed");
@@ -75,12 +74,9 @@ setup("auth-locked-out-user", async ({ page }, testInfo) => {
     await saveAuthState(page, getAuthFileForUserType("lockedOutUser"));
 
     console.log("✓ Locked out user authentication setup completed\n");
-
   } catch (error) {
     console.error(`✗ Locked out user authentication failed: ${error}`);
     testInfo.skip(true, "Authentication failed");
     throw error;
   }
 });
-
-

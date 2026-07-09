@@ -6,15 +6,15 @@
 import { Locator, Page } from "@playwright/test";
 
 export class LoginPageLocators {
-  constructor(readonly page: Page) { }
+  constructor(readonly page: Page) {}
 
   // Page elements
   get pageHeading1(): Locator {
-    return this.page.getByRole('heading', { name: '🛒 Codemify Store' });
+    return this.page.getByRole("heading", { name: "🛒 Codemify Store" });
   }
 
   get pageHeading2(): Locator {
-    return this.page.getByText('Please login to continue')
+    return this.page.getByText("Please login to continue");
   }
 
   // Form inputs
@@ -50,7 +50,6 @@ export class LoginPageLocators {
     });
   }
 
-
   get userLockedError(): Locator {
     return this.page.getByRole("alert").filter({
       hasText: "Sorry, this user has been locked out",
@@ -60,7 +59,9 @@ export class LoginPageLocators {
   // Helper to check if login page is loaded
   async isLoginPageDisplayed(): Promise<boolean> {
     return (
-      (await this.pageHeading1.isVisible({ timeout: 5000 }).catch(() => false)) &&
+      (await this.pageHeading1
+        .isVisible({ timeout: 5000 })
+        .catch(() => false)) &&
       (await this.pageHeading2.isVisible({ timeout: 5000 }).catch(() => false))
     );
   }
@@ -68,7 +69,8 @@ export class LoginPageLocators {
 
 // Legacy export for backward compatibility
 export const LOGIN_LOCATORS = {
-  pageHeading1: (page: Page) => page.getByRole("heading", { name: "Codemify Store" }),
+  pageHeading1: (page: Page) =>
+    page.getByRole("heading", { name: "Codemify Store" }),
   pageHeading2: (page: Page) =>
     page.getByRole("heading", { name: "Please login to continue" }),
   usernameInput: (page: Page) =>

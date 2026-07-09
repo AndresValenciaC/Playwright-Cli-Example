@@ -36,8 +36,10 @@ export class LoginPage extends BasePage {
       console.log("✓ Login page verified");
     } catch (error) {
       throw new Error(
-        `Failed to verify login page: ${error instanceof Error ? error.message : String(error)
+        `Failed to verify login page: ${
+          error instanceof Error ? error.message : String(error)
         }`,
+        { cause: error },
       );
     }
   }
@@ -51,8 +53,10 @@ export class LoginPage extends BasePage {
       console.log("✓ Username filled");
     } catch (error) {
       throw new Error(
-        `Failed to fill username: ${error instanceof Error ? error.message : String(error)
+        `Failed to fill username: ${
+          error instanceof Error ? error.message : String(error)
         }`,
+        { cause: error },
       );
     }
   }
@@ -66,8 +70,10 @@ export class LoginPage extends BasePage {
       console.log("✓ Password filled");
     } catch (error) {
       throw new Error(
-        `Failed to fill password: ${error instanceof Error ? error.message : String(error)
+        `Failed to fill password: ${
+          error instanceof Error ? error.message : String(error)
         }`,
+        { cause: error },
       );
     }
   }
@@ -81,8 +87,10 @@ export class LoginPage extends BasePage {
       console.log("✓ Login button clicked");
     } catch (error) {
       throw new Error(
-        `Failed to click login button: ${error instanceof Error ? error.message : String(error)
+        `Failed to click login button: ${
+          error instanceof Error ? error.message : String(error)
         }`,
+        { cause: error },
       );
     }
   }
@@ -102,6 +110,7 @@ export class LoginPage extends BasePage {
     } catch (error) {
       throw new Error(
         `Login failed: ${error instanceof Error ? error.message : String(error)}`,
+        { cause: error },
       );
     }
   }
@@ -124,7 +133,9 @@ export class LoginPage extends BasePage {
       });
       console.log("✓ Invalid credentials error verified");
     } catch (error) {
-      throw new Error("Invalid credentials error not displayed");
+      throw new Error("Invalid credentials error not displayed", {
+        cause: error,
+      });
     }
   }
 
@@ -138,7 +149,9 @@ export class LoginPage extends BasePage {
       });
       console.log("✓ User locked error verified");
     } catch (error) {
-      throw new Error("User locked error not displayed");
+      throw new Error("User locked error not displayed", {
+        cause: error,
+      });
     }
   }
 

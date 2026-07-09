@@ -3,7 +3,7 @@ import { TEST_URLS } from "../../test-data/test-data-users";
 
 /**
  * Critical User Workflow Test: Complete E-Commerce Purchase
- * 
+ *
  * Uses pre-authenticated state - no manual login needed
  * Tests the complete user journey from browsing to order completion
  */

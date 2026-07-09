@@ -13,7 +13,6 @@ test.describe("Visual Regression Tests", () => {
 
   test.describe("Login Page Visuals", () => {
     test("login page layout should match expected visual", async ({ page }) => {
-
       // expect to see the main title of the login page
       const mainTitle = page.locator("h1, h2, [class*='title']").first();
       await expect(mainTitle).toHaveText("🛒 Codemify Store");
@@ -116,9 +115,7 @@ test.describe("Visual Regression Tests", () => {
     test("cart total section styling should be consistent", async ({
       page,
     }) => {
-      const totalSection = page
-        .locator("text=/Total|TOTAL/")
-        .first();
+      const totalSection = page.locator("text=/Total|TOTAL/").first();
 
       if (await totalSection.isVisible()) {
         await expect(totalSection).toHaveScreenshot("cart-total.png");

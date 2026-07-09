@@ -285,7 +285,7 @@ test.describe("API Error Handling with Mocked Responses", () => {
     test("should handle response with added fields", async ({ page }) => {
       await page.route("**/api/products", async (route) => {
         const response = await route.fetch();
-        let body = await response.json();
+        const body = await response.json();
 
         // Add metadata to response
         const modifiedResponse = {

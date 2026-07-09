@@ -1,4 +1,5 @@
-name: Playwright Tests
+name: Continuous Integration
+
 on:
   push:
     branches: [main, master]
@@ -6,13 +7,53 @@ on:
     branches: [main, master]
 
 jobs:
-  test:
-    timeout-minutes: 60
+  # ==========================================
+  # JOB 1: Code Quality Validation
+  # ==========================================
+  lint-and-typecheck:
+    name: Lint & Typecheck
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.x"
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Verifies TypeScript types without compiling static assets
+      - name: Typecheck code (TypeScript)
+        run: npx tsc --noEmit
+
+      # Analyzes static code for errors based on your ESLint setup
+      - name: Run ESLint
+        run: npm run lint
+
+      # Validates overall code styling configuration rules
+      - name: Check Formatting (Prettier)
+        run: npx prettier --check .
+
+  # ==========================================
+  # JOB 2: Playwright E2E Automation Tests
+  # ==========================================
+  playwright-tests:
+    name: Playwright Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: lint-and-typecheck # <-- Ensures tests only run if code quality standards pass successfully
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: "24.x"
           cache: "npm"
@@ -37,6 +78,7 @@ jobs:
 
       # Only downloads browsers if there is a cache miss
       - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
 
       # Installs OS system dependencies if cache hit happens (ensures system libraries exist)
@@ -47,7 +89,8 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload Report Artifact
+        uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: playwright-report

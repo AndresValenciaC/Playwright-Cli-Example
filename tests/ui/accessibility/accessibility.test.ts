@@ -20,9 +20,9 @@ test.describe("Accessibility Tests", () => {
         const firstInput = inputs.first();
         await firstInput.focus();
 
-        const focusedElement = await page.evaluate(() => {
-          return document.activeElement?.tagName;
-        });
+        const focusedElement = await page.evaluate(
+          () => document.activeElement?.tagName,
+        );
 
         expect(focusedElement).not.toBeNull();
       }
@@ -38,9 +38,9 @@ test.describe("Accessibility Tests", () => {
         const firstButton = buttons.first();
         await firstButton.focus();
 
-        const outline = await firstButton.evaluate((el) => {
-          return globalThis.getComputedStyle(el).outline;
-        });
+        const outline = await firstButton.evaluate(
+          (el) => globalThis.getComputedStyle(el).outline,
+        );
 
         // Outline should not be 'none'
         expect(outline).not.toBe("none");
@@ -231,9 +231,9 @@ test.describe("Accessibility Tests", () => {
       if ((await textElements.count()) > 0) {
         const firstElement = textElements.first();
 
-        const color = await firstElement.evaluate((el) => {
-          return globalThis.getComputedStyle(el).color;
-        });
+        const color = await firstElement.evaluate(
+          (el) => globalThis.getComputedStyle(el).color,
+        );
 
         expect(color).toBeDefined();
       }
@@ -247,13 +247,13 @@ test.describe("Accessibility Tests", () => {
       if ((await buttons.count()) > 0) {
         const button = buttons.first();
 
-        const bgColor = await button.evaluate((el) => {
-          return globalThis.getComputedStyle(el).backgroundColor;
-        });
+        const bgColor = await button.evaluate(
+          (el) => globalThis.getComputedStyle(el).backgroundColor,
+        );
 
-        const textColor = await button.evaluate((el) => {
-          return globalThis.getComputedStyle(el).color;
-        });
+        const textColor = await button.evaluate(
+          (el) => globalThis.getComputedStyle(el).color,
+        );
 
         // Both colors should be defined
         expect(bgColor).toBeDefined();
@@ -271,9 +271,9 @@ test.describe("Accessibility Tests", () => {
       if (await button.isVisible()) {
         await button.focus();
 
-        const isFocused = await button.evaluate((el) => {
-          return document.activeElement === el;
-        });
+        const isFocused = await button.evaluate(
+          (el) => document.activeElement === el,
+        );
 
         expect(isFocused).toBeTruthy();
       }
@@ -287,9 +287,9 @@ test.describe("Accessibility Tests", () => {
       if (await button.isVisible()) {
         await button.focus();
 
-        const initialFocusedElement = await page.evaluate(() => {
-          return document.activeElement?.tagName;
-        });
+        const initialFocusedElement = await page.evaluate(
+          () => document.activeElement?.tagName,
+        );
 
         expect(initialFocusedElement).not.toBeNull();
       }

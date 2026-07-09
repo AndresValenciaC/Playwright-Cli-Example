@@ -1,7 +1,6 @@
 import { APIRequestContext, expect, test } from "@playwright/test";
 import { TEST_CONFIG } from "../../../fixtures/constants";
-import { AUTH_FILES } from './../../../fixtures/auth-config';
-
+import { AUTH_FILES } from "./../../../fixtures/auth-config";
 
 /**
  * API Response Validation Tests
@@ -12,9 +11,9 @@ test.describe("API Response Validation Tests", () => {
   let apiContext: APIRequestContext;
 
   /**
-    * Setup: Create API context with authentication
-    * Uses storage state from successful login
-    */
+   * Setup: Create API context with authentication
+   * Uses storage state from successful login
+   */
   test.beforeAll(async ({ playwright }, testInfo) => {
     try {
       // Create API context with authenticated cookies/tokens
@@ -80,8 +79,10 @@ test.describe("API Response Validation Tests", () => {
 
       products.forEach((product: any, index: number) => {
         requiredFields.forEach((field) => {
-          if (!product.hasOwnProperty(field)) {
-            throw new Error(`Product at index ${index} missing field: ${field}`);
+          if (!Object.prototype.hasOwnProperty.call(product, field)) {
+            throw new Error(
+              `Product at index ${index} missing field: ${field}`,
+            );
           }
           expect(product).toHaveProperty(field);
         });
@@ -113,16 +114,13 @@ test.describe("API Response Validation Tests", () => {
 
       // Iterate and validate
       products.forEach((product: any) => {
-
         // Validate name existence and type
         expect(product.name).toBeDefined();
         expect(typeof product.name).toBe("string");
 
         // Validate name its not empty
-        expect(product.name.trim().length).toBeGreaterThan(0)
-
+        expect(product.name.trim().length).toBeGreaterThan(0);
       });
-
     });
 
     test("product prices should be positive numbers with valid precision", async () => {
@@ -133,15 +131,9 @@ test.describe("API Response Validation Tests", () => {
       expect(Array.isArray(products)).toBeTruthy();
 
       products.forEach((product: any) => {
-        expect(typeof product.price).toBe(
-          "number"
-        );
-        expect(product.price).toBeGreaterThan(
-          0
-        );
-        expect(product.price).toBeLessThan(
-          10000
-        );
+        expect(typeof product.price).toBe("number");
+        expect(product.price).toBeGreaterThan(0);
+        expect(product.price).toBeLessThan(10000);
 
         // Check precision (max 2 decimal places for currency)
         const decimalPlaces = (product.price.toString().split(".")[1] || "")
@@ -172,15 +164,10 @@ test.describe("API Response Validation Tests", () => {
       const products = await response.json();
 
       products.forEach((product: any, index: number) => {
-        expect(typeof product.image).toBe(
-          "string"
-        );
-        expect(product.image.length).toBeGreaterThan(
-          0
-        );
+        expect(typeof product.image).toBe("string");
+        expect(product.image.length).toBeGreaterThan(0);
       });
     });
-
 
     test.describe("Data Type Validation", () => {
       test("should strictly validate all product data types", async () => {

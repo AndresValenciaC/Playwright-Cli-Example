@@ -22,6 +22,8 @@ export default defineConfig({
     ["html"],
     ["github"],
     ["json", { outputFile: "./test-results/test-results.json" }],
+    ["line"],
+    ["allure-playwright"],
   ],
 
   use: {

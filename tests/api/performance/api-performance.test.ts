@@ -45,7 +45,6 @@ test.describe("API Performance Tests", () => {
     console.log("✓ API context disposed");
   });
 
-
   // Log performance summary
   if (performanceMetrics.length > 0) {
     const avgTime =
@@ -60,7 +59,6 @@ test.describe("API Performance Tests", () => {
     console.log(`  Min Response Time: ${minTime.toFixed(2)}ms`);
     console.log(`  Total Requests: ${performanceMetrics.length}`);
   }
-
 
   test.describe("Response Time Benchmarks", () => {
     test("should fetch products within fast threshold (< 500ms)", async () => {

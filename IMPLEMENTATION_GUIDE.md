@@ -281,6 +281,14 @@ npx playwright test setup; npx playwright test --headed
 
 ---
 
+# Ensure Github Actions pass with linter.yml
+
+npx prettier --check .
+npx prettier --write .
+npx eslint .
+npm run lint -- --fix
+npx eslint . --fix
+
 ## Environment Variables
 
 Make sure your `.env` has:

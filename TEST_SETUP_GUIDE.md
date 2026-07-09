@@ -2,13 +2,13 @@
 
 ## Quick Reference
 
-| Test Type | Setup | Auth | Context |
-|-----------|-------|------|---------|
-| **API** | `beforeAll` | Manual | `apiContext` |
-| **E2E/UI** | `beforeEach` | Auto | `page` |
-| **Integration** | `beforeAll` | Manual | `apiContext` |
-| **Accessibility** | `beforeEach` | Auto | `page` |
-| **Performance** | `beforeAll` | Manual | `apiContext` |
+| Test Type         | Setup        | Auth   | Context      |
+| ----------------- | ------------ | ------ | ------------ |
+| **API**           | `beforeAll`  | Manual | `apiContext` |
+| **E2E/UI**        | `beforeEach` | Auto   | `page`       |
+| **Integration**   | `beforeAll`  | Manual | `apiContext` |
+| **Accessibility** | `beforeEach` | Auto   | `page`       |
+| **Performance**   | `beforeAll`  | Manual | `apiContext` |
 
 ---
 
@@ -17,17 +17,20 @@
 ### beforeAll + apiContext (API Tests Only)
 
 **Use when:**
+
 - Testing API endpoints directly
 - Making HTTP requests (GET, POST, PUT, DELETE)
 - Testing backend logic without UI
 - Testing performance or integration
 
 **Why beforeAll?**
+
 - Executes **once** before all tests in describe block
 - Faster (reuses same context)
 - Perfect for API requests
 
 **Example:**
+
 ```typescript
 test.describe("API Tests", () => {
   let apiContext;
@@ -50,6 +53,7 @@ test.describe("API Tests", () => {
 ### beforeEach + page (UI/E2E Tests Only)
 
 **Use when:**
+
 - Testing user interactions (click, fill, drag)
 - Testing visual workflows
 - Testing state management
@@ -57,12 +61,14 @@ test.describe("API Tests", () => {
 - Testing forms and validations
 
 **Why beforeEach?**
+
 - Executes **before each test**
 - Each test gets clean, isolated page
 - No test pollution
 - **Authentication is automatic via storageState**
 
 **Example:**
+
 ```typescript
 test.describe("E2E Tests", () => {
   test.beforeEach(async ({ page }) => {
@@ -83,6 +89,7 @@ test.describe("E2E Tests", () => {
 ## Authentication
 
 ### API Tests
+
 ```typescript
 // ✅ MANUAL - Must pass storageState to apiContext
 test.beforeAll(async ({ playwright }, testInfo) => {
@@ -93,6 +100,7 @@ test.beforeAll(async ({ playwright }, testInfo) => {
 ```
 
 ### UI/E2E Tests
+
 ```typescript
 // ✅ AUTOMATIC - playwright.config.ts handles it
 // No beforeAll needed
@@ -121,6 +129,7 @@ projects: [
 ```
 
 **Flow:**
+
 1. Setup creates auth files ✓
 2. Config loads storageState automatically ✓
 3. Every `page.goto()` has cookies/tokens ✓
@@ -142,12 +151,14 @@ Am I testing an API endpoint?
 ## File Checklist
 
 ### New API Test File
+
 - [ ] Add `beforeAll` with `apiContext`
 - [ ] Add `afterAll` with `apiContext.dispose()`
 - [ ] Use `apiContext.get()`, `post()`, etc.
 - [ ] Pass `storageState` to `newContext()`
 
 ### New E2E/UI Test File
+
 - [ ] Add `beforeEach` with `page.goto()`
 - [ ] ❌ DO NOT add `beforeAll`
 - [ ] ❌ DO NOT create `apiContext`
@@ -158,6 +169,7 @@ Am I testing an API endpoint?
 ## Common Mistakes
 
 ❌ **Wrong:** beforeAll in E2E test
+
 ```typescript
 test.beforeAll(async ({ playwright }) => {
   // Don't do this for UI tests
@@ -166,6 +178,7 @@ test.beforeAll(async ({ playwright }) => {
 ```
 
 ✅ **Right:** beforeEach in E2E test
+
 ```typescript
 test.beforeEach(async ({ page }) => {
   await page.goto(TEST_URLS.inventory);
@@ -175,6 +188,7 @@ test.beforeEach(async ({ page }) => {
 ---
 
 ❌ **Wrong:** Manual login in E2E test
+
 ```typescript
 test("should buy", async ({ page }) => {
   await page.goto(BASE_URL);
@@ -184,6 +198,7 @@ test("should buy", async ({ page }) => {
 ```
 
 ✅ **Right:** Use storageState
+
 ```typescript
 test("should buy", async ({ page }) => {
   await page.goto(TEST_URLS.inventory); // Already authenticated
@@ -195,6 +210,7 @@ test("should buy", async ({ page }) => {
 ## Template Copy-Paste
 
 ### API Test Template
+
 ```typescript
 import { APIRequestContext, expect, test } from "@playwright/test";
 import { setupAuthenticatedAPI } from "../fixtures/api-test-helpers";
@@ -218,6 +234,7 @@ test.describe("API Suite", () => {
 ```
 
 ### E2E Test Template
+
 ```typescript
 import { expect, test } from "@playwright/test";
 import { TEST_URLS } from "../test-data/test-data-users";
@@ -240,12 +257,14 @@ test.describe("E2E Suite", () => {
 ## Summary
 
 **beforeAll + apiContext:**
+
 - API tests only
 - Manual authentication
 - Executes once
 - Reuses same context
 
 **beforeEach + page:**
+
 - UI/E2E tests only
 - Automatic authentication (via storageState)
 - Executes each test

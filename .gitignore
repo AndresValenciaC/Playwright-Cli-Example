@@ -18,6 +18,7 @@ node_modules/
 
 # Test artifacts
 /test-results/
+/allure-results/
 *.log
 
 # IDE

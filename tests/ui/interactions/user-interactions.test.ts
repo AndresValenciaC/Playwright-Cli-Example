@@ -160,9 +160,7 @@ test.describe("User Interaction Tests", () => {
       if (await button.isVisible()) {
         await button.hover();
 
-        const hoverColor = await button.evaluate((el) => {
-          return window.getComputedStyle(el).backgroundColor;
-        });
+        const hoverColor = await button.evaluate((el) => window.getComputedStyle(el).backgroundColor);
 
         expect(hoverColor).toBeDefined();
       }
@@ -262,9 +260,7 @@ test.describe("User Interaction Tests", () => {
       if (await input.isVisible()) {
         await input.focus();
 
-        const isFocused = await input.evaluate((el) => {
-          return document.activeElement === el;
-        });
+        const isFocused = await input.evaluate((el) => document.activeElement === el);
 
         expect(isFocused).toBeTruthy();
       }
@@ -315,9 +311,7 @@ test.describe("User Interaction Tests", () => {
         await firstInput.focus();
         await firstInput.press("Tab");
 
-        const focusedElement = await page.evaluate(() => {
-          return document.activeElement?.tagName;
-        });
+        const focusedElement = await page.evaluate(() => document.activeElement?.tagName);
 
         expect(focusedElement).not.toBeNull();
       }
